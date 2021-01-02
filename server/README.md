@@ -18,6 +18,6 @@ Contains:
 Contains model files using db and Sequelize
 
 ### API Routes
-Index.js - exports **main router w/ error handling**  
+Index.js - exports **main router w/ 404 error handling**  
 Contains:
 - route files
