@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
 //connect to our routes in the API folder
-//app.use('/api', require('./api'));
+app.use('/api', require('./api'));
 
 //if URL is not in our routes folder, send index.html
 app.get('*', async(req,res,next) => {
