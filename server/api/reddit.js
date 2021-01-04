@@ -20,35 +20,31 @@ router.get('/:reqId', async(req,res,next) => {
         const requisition = await Requisition.findByPk(reqId);
         const subReddits = requisition.dataValues.subReddits;
         const searchString = requisition.dataValues.searchString;
-        const allNewPosts = [];
-        for(let i = 0; i < subReddits.length; i++){
-           const posts = (await r.getSubreddit(subReddits[i]).search({
-                query: searchString,
-                time: 'hour',
-                sort: 'new',
-            }));
-            allNewPosts.push(posts.map(post => ({
-                title: post.title, 
-                redditUrl: `https://www.reddit.com${post.permalink}`,
-                imageUrl: post.preview ? post.preview.images[0].source.url : '', //source image - maybe take thumbnail?
-                subReddit: subReddits[i],
-                requisitionId: reqId
-            })));
-        }
-        await Post.bulkCreate(allNewPosts)
-        res.send(allNewPosts);
+        const fetchedPosts = await queryReddit(subReddits, searchString, reqId);
+        const insertedPosts = await Post.bulkCreate(fetchedPosts);
+        if(insertedPosts) res.sendStatus(200);
     } catch (error) {
         next(error);
     }
 })
 
-
-
-//r.getHot().map(post => post).then(console.log);
-
-//subreddit_name_prefixed
-//title
-//selftext - or use innate search
-//media - url_overridden_by_dest
+async function queryReddit(subReddits, searchString, reqId){
+    const allNewPosts = [];
+    for(let i = 0; i < subReddits.length; i++){
+        const posts = await r.getSubreddit(subReddits[i]).search({
+            query: searchString,
+            time: 'hour',
+            sort: 'new',
+        });
+        allNewPosts.push(...posts.map(post => ({
+            title: post.title, 
+            redditUrl: `https://www.reddit.com${post.permalink}`,
+            imageUrl: post.preview ? post.preview.images[0].source.url : '', //source image - maybe take thumbnail?
+            subReddit: subReddits[i],
+            requisitionId: reqId
+        })));
+    }
+    return allNewPosts;
+}
 
 module.exports = router;
