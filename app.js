@@ -1,7 +1,7 @@
 const { db } = require('./server/db');
 const app = require('./server');
 const cron = require('node-cron');
-const PORT = 3000;
+const PORT = 5000;
 
 db.sync().then(() => {
     console.log('DB is connected and synced');

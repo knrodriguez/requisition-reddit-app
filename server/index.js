@@ -19,7 +19,7 @@ app.use(express.json());
 app.use('/api', require('./api'));
 
 //if URL is not in our routes folder, send index.html
-app.get('*', async(req,res,next) => {
+app.get('*', (req,res,next) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 })
 
