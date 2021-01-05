@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Op = require('sequelize').Op;
-const { Post } = require('../db/models');
+const { Post, Requisition, User } = require('../db/models');
 
 //HAVE TO ADD USERIDs to each method
 
@@ -10,10 +10,14 @@ router.get('/', async(req,res,next) => {
         let posts;
         if(reqId){
             posts = await Post.findAll({
-                where: {requisitionId: [reqId]}
+                where: {requisitionId: [reqId]},
+                include: [{model: Requisition, include: [{model:User}]}]
             })
         } else{
-            posts = await Post.findAll(); 
+            console.log('I make it to findAll')
+            posts = await Post.findAll({
+                include: [{model: Requisition, include: [{model:User}]}]
+            }); 
         }
         if(posts.length === 0){
             res.send('I work but cant find anything');

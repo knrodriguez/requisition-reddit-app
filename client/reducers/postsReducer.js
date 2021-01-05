@@ -18,10 +18,10 @@ export const getPosts = (posts, from) => ({
 //     posts
 // })
 
-export const getPostsFromReddit = (userId) => {
+export const getPostsFromReddit = (reqId) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`/api/reddit/${userId}`);
+            const { data } = await axios.get(`/api/reddit/${reqId}`);
             dispatch(getPosts(data, 'reddit'));
         } catch (error) {
             console.log('Error inside getPostsFromReddit thunk', error);
@@ -29,13 +29,14 @@ export const getPostsFromReddit = (userId) => {
     }
 }
 
-export const getPostsFromDb = (reqId) => {
+export const getPostsFromDb = (userId) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`/posts/${reqId}`);
+            const { data } = await axios.get(`/api/posts`);
+            console.log('data',data)
             dispatch(getPosts(data, 'db'));
         } catch (error) {
-            next(error);
+            console.log('Error inside getPostsFromDb thunk', error);
         }
     }
 }
