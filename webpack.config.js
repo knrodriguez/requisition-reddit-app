@@ -10,7 +10,7 @@ module.exports = {
   },
   mode: 'development',
   context: __dirname,
-  // devtool: 'source-map',
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx']
   },
@@ -21,13 +21,6 @@ module.exports = {
         include: resolve(__dirname, './client'),
         loader: 'babel-loader'
       },
-    //   {
-    //     test: /\.css$/,
-    //     use: [
-    //       'style-loader',
-    //       'css-loader'
-    //     ]
-    //   }
     ]
   }
 }

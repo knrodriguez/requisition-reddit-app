@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { Provider } from 
-class Main extends React.Component {
-    render(){
-        return(
-            <h1>Hi React Works</h1>
-        )
-    }
-}
-ReactDOM.render( <h1>Hi React Works</h1>, document.getElementById('app'))
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import App from './components/App';
+
+const history = createBrowserHistory();
+
+ReactDOM.render(
+    <Router history={history}>
+        <App />
+    </Router>,
+    document.getElementById('app'))
 
