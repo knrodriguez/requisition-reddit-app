@@ -1,16 +1,13 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import Login from './Login';
+import { Route } from 'react-router-dom';
 
-class Landing extends React.Component {
-    
-    render(){
-        return(
-            <div>
-                <div>THIS WILL BE A BLURB</div>
-                <Login />
-            </div>
-        )
-    }
+export const Landing = (props) => {
+    return(
+        <div className='landing-page'>
+            <div>THIS WILL BE A BLURB</div>
+            < Route path='/' component={Login} />
+        </div>
+    )
 }
-
-export default Landing;

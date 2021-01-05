@@ -8,16 +8,6 @@ export const getPosts = (posts, from) => ({
     posts
 })
 
-// export const getMyPosts = (posts) => ({
-//     type: GET_MY_POSTS,
-//     posts
-// })
-
-// export const getRedditPosts = (posts) => ({
-//     type: GET_REDDIT_POSTS,
-//     posts
-// })
-
 export const getPostsFromReddit = (reqId) => {
     return async (dispatch) => {
         try {
@@ -33,7 +23,6 @@ export const getPostsFromDb = (userId) => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get(`/api/posts`);
-            console.log('data',data)
             dispatch(getPosts(data, 'db'));
         } catch (error) {
             console.log('Error inside getPostsFromDb thunk', error);

@@ -27,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
     const classes = useStyles();
-    let [auth, setAuth] = React.useState(true);
-    auth = false;
+    const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -46,12 +45,12 @@ export default function Navbar() {
 
     return (
         <div className={classes.root}>
-        {/* <FormGroup>
+        <FormGroup>
             <FormControlLabel
             control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
             label={auth ? 'Logout' : 'Login'}
             />
-        </FormGroup> */}
+        </FormGroup>
         <AppBar position="static">
             <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -88,6 +87,7 @@ export default function Navbar() {
                 >
                     <MenuItem onClick={handleClose}>Profile</MenuItem>
                     <MenuItem onClick={handleClose}>My account</MenuItem>
+                    <MenuItem onClick={handleClose}>Logout</MenuItem>
                 </Menu>
                 </div>
             ) : (

@@ -1,12 +1,20 @@
 import React from 'react';
-import { Route, Switch} from 'react-router-dom'
+import { connect } from 'react-redux';
+import { Route, Switch, withRouter} from 'react-router-dom'
 import AllPosts from './AllPosts';
 import Settings from './Settings';
 import Navbar from './Navbar';
-import Landing from './Landing'
+import { Landing } from './Landing';
+import { getMe } from '../reducers/userReducer';
 
 
-class App extends React.Component {
+const App = withRouter( class extends React.Component {
+
+    async componentDidMount(){
+        this.props.getUser();
+        this.props.history.push('/posts');
+    }
+
     render(){
         return (
             <div>
@@ -19,6 +27,14 @@ class App extends React.Component {
             </div>
         )
     }
-}
+})
 
-export default App;
+const mapState = (state) => ({
+    user: state.user
+})
+
+const mapDispatch = (dispatch) => ({
+    getUser: () => dispatch(getMe())
+})
+
+export default connect(mapState, mapDispatch)(App);

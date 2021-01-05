@@ -4,21 +4,28 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const volleyball = require('volleyball');
+const session = require('express-session');
 
 //HTTP logger
 app.use(volleyball);
-
-//static files
-app.use(express.static(path.join(__dirname, '../public')));
 
 //body parser
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
-app.use('/auth', require('./auth'));
-//connect to our routes in the API folder
-app.use('/api', require('./api'));
+//Session middleware
+app.use(session({
+    secret: 'not secure',
+    resave: false,
+    saveUninitialized: false
+}))
 
+//static files
+app.use(express.static(path.join(__dirname, '../public')));
+
+//connect to our routers
+app.use('/auth', require('./auth'));
+app.use('/api', require('./api'));
 
 //if URL is not in our routes folder, send index.html
 app.get('*', (req,res,next) => {
