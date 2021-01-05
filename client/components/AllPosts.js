@@ -3,6 +3,7 @@ import React from 'react';
 import RequisitionForm from './RequisitionForm';
 import Post from './Post';
 import { getPostsFromDb, getPostsFromReddit } from '../reducers/postsReducer';
+import { Redirect } from 'react-router-dom';
 
 class AllPosts extends React.Component {
     constructor(){
@@ -10,12 +11,15 @@ class AllPosts extends React.Component {
     }
 
     componentDidMount(){
-        // this.props.getPostsFromReddit();
         this.props.getPostsFromDb(1); //hardcoding userId = 1
     }
 
     render(){
-        const posts = this.props.posts || [];
+        let { user, posts } = this.props;
+        if(!user.id){
+            return <Redirect to='/' />
+        }
+        posts = posts || [];
         return (
             <div>
                 <RequisitionForm />
@@ -31,6 +35,7 @@ class AllPosts extends React.Component {
 
 const mapState = (state) => ({
     posts: state.posts,
+    user: state.user
 });
 
 const mapDispatch = (dispatch) => ({

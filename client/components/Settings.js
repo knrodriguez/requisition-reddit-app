@@ -7,5 +7,7 @@ class Settings extends React.Component {
         )
     }
 }
-
+/*const mapState = (state) => ({
+    user: state.user
+})*/
 export default Settings;
