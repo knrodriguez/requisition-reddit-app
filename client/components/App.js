@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch} from 'react-router-dom'
-import AllRequisitions from './AllPosts';
+import AllPosts from './AllPosts';
 import Settings from './Settings';
 import Navbar from './Navbar';
 import Landing from './Landing'
@@ -11,11 +11,11 @@ class App extends React.Component {
         return (
             <div>
                 <Navbar />
-                    <Switch>
-                        <Route exact path='/' component={Landing}/>
-                        <Route exact path='/requisitions' component={AllRequisitions} />
-                        <Route exact path='/settings' component={Settings} />
-                    </Switch>
+                <Switch>
+                    <Route exact path='/' component={Landing}/>
+                    <Route exact path='/posts' component={AllPosts} />
+                    <Route exact path='/settings' component={Settings} />
+                </Switch>
             </div>
         )
     }

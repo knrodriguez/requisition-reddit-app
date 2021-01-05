@@ -36,39 +36,39 @@ class RequisitionForm extends React.Component {
         return useTheme;
     }
     render(){
-        const classes = this.useStyles();
-        const names = [
-            'Oliver Hansen',
-            'Van Henry',
-            'April Tucker',
-            'Ralph Hubbard',
-            'Omar Alexander',
-            'Carlos Abbott',
-            'Miriam Wagner',
-            'Bradley Wilkerson',
-            'Virginia Andrews',
-            'Kelly Snyder',
-        ];
-        const theme = this.createTheme();
-        let [personName, setPersonName] = React.useState([]);
+        // const classes = this.useStyles();
+        // const names = [
+        //     'Oliver Hansen',
+        //     'Van Henry',
+        //     'April Tucker',
+        //     'Ralph Hubbard',
+        //     'Omar Alexander',
+        //     'Carlos Abbott',
+        //     'Miriam Wagner',
+        //     'Bradley Wilkerson',
+        //     'Virginia Andrews',
+        //     'Kelly Snyder',
+        // ];
+        // const theme = this.createTheme();
+        // let [personName, setPersonName] = React.useState([]);
 
-        const handleChange = (event) => {
-            setPersonName(event.target.value);
-        };
+        // const handleChange = (event) => {
+        //     setPersonName(event.target.value);
+        // };
 
-        const handleChangeMultiple = (event) => {
-            const { options } = event.target;
-            const value = [];
-            for (let i = 0, l = options.length; i < l; i += 1) {
-                if (options[i].selected) {
-                    value.push(options[i].value);
-                }
-            }
-            setPersonName(value);
-        };
+        // const handleChangeMultiple = (event) => {
+        //     const { options } = event.target;
+        //     const value = [];
+        //     for (let i = 0, l = options.length; i < l; i += 1) {
+        //         if (options[i].selected) {
+        //             value.push(options[i].value);
+        //         }
+        //     }
+        //     setPersonName(value);
+        // };
         return(
             <div>
-                <form className={classes.root} noValidate autoComplete="off">
+                {/* <form className={classes.root} noValidate autoComplete="off">
                     <TextField id="searchString" label="Search Keywords" />
                     <FormControl className={classes.formControl}>
                         <InputLabel id="demo-mutiple-chip-label">Chip</InputLabel>
@@ -95,7 +95,7 @@ class RequisitionForm extends React.Component {
                         ))}
                         </Select>
                     </FormControl>
-                </form>
+                </form> */}
             </div>
         )
     }

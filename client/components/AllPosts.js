@@ -4,19 +4,18 @@ import RequisitionForm from './RequisitionForm';
 import Post from './Post';
 import { getPostsFromReddit } from '../reducers/postsReducer';
 
-class AllRequisitions extends React.Component {
+class AllPosts extends React.Component {
     constructor(){
         super();
-        this.state({});
     }
 
     componentDidMount(){
-        props.getPostsFromReddit();
+        this.props.getPostsFromReddit(userId);
     }
 
-
     render(){
-        const posts = [];
+        const posts = this.props.posts || [];
+        console.log(posts);
         return (
             <div>
                 <RequisitionForm />
@@ -30,11 +29,11 @@ class AllRequisitions extends React.Component {
 }
 
 const mapState = (state) => ({
-    posts: state.posts
+    posts: state.posts,
 });
 
 const mapDispatch = (dispatch) => ({
-    getPostsFromReddit: () => dispatch(getPostsFromReddit())
+    getPostsFromReddit: (userId) => dispatch(getPostsFromReddit())
 });
 
-export default connect(mapState, mapDispatch)(AllRequisitions);
+export default connect(mapState, mapDispatch)(AllPosts);

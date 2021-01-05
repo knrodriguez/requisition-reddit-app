@@ -1,11 +1,12 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import posts from './postsReducer';
 // import post from './postReducer';
 // import requisitions from './requisitionsReducer';
 // import requisition from './requisitionReducer';
 //import { reducer as form } from 'redux-form';
 
-const rootReducer = combinerReducers({
+const rootReducer = combineReducers({
     posts,
     // post,
     // requisitions,
@@ -13,4 +14,4 @@ const rootReducer = combinerReducers({
     //form
 });
 
-const store = createStore(rootReducer);
+export default createStore(rootReducer, applyMiddleware(thunk));

@@ -18,13 +18,13 @@ export const getPosts = (posts, from) => ({
 //     posts
 // })
 
-export const getPostsFromReddit = (reqId) => {
+export const getPostsFromReddit = (userId) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`/reddit/${reqId}`);
+            const { data } = await axios.get(`/api/reddit/${userId}`);
             dispatch(getPosts(data, 'reddit'));
         } catch (error) {
-            next(error);
+            console.log('Error inside getPostsFromReddit thunk', error);
         }
     }
 }
