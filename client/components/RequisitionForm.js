@@ -1,104 +1,44 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import clsx from 'clsx';
-import { makeStyles, unstable_createMuiStrictModeTheme, useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
-import Chip from '@material-ui/core/Chip';
-
+import Button from '@material-ui/core/Button';
+import { addRequisition } from '../reducers/requisitionReducer';
+import { connect } from 'react-redux';
 
 class RequisitionForm extends React.Component {
-
-    useStyles() {
-        return makeStyles((theme) => ({
-            root: {
-                '& .MuiTextField-root': {
-                  margin: theme.spacing(1),
-                  width: '25ch',
-                },
-            },  
-            chips: {
-                display: 'flex',
-                flexWrap: 'wrap',
-            },
-            chip: {
-                margin: 2,
-            },
-        }))
+    constructor(){
+        super();
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    createTheme () {
-        return useTheme;
+    handleSubmit(event) {
+        event.preventDefault();
+        try {
+            const target = event.target;
+            this.props.addRequisition({
+                searchString: target.searchString.value,
+                subReddits:  target.subReddits.value.split(','),
+                userId: this.props.user.id});
+        } catch (error) {
+            console.error('Cannot submit new requisition', error.stack);
+        }
     }
+    
     render(){
-        // const classes = this.useStyles();
-        // const names = [
-        //     'Oliver Hansen',
-        //     'Van Henry',
-        //     'April Tucker',
-        //     'Ralph Hubbard',
-        //     'Omar Alexander',
-        //     'Carlos Abbott',
-        //     'Miriam Wagner',
-        //     'Bradley Wilkerson',
-        //     'Virginia Andrews',
-        //     'Kelly Snyder',
-        // ];
-        // const theme = this.createTheme();
-        // let [personName, setPersonName] = React.useState([]);
-
-        // const handleChange = (event) => {
-        //     setPersonName(event.target.value);
-        // };
-
-        // const handleChangeMultiple = (event) => {
-        //     const { options } = event.target;
-        //     const value = [];
-        //     for (let i = 0, l = options.length; i < l; i += 1) {
-        //         if (options[i].selected) {
-        //             value.push(options[i].value);
-        //         }
-        //     }
-        //     setPersonName(value);
-        // };
         return(
-            <div>
-                {/* <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="searchString" label="Search Keywords" />
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-mutiple-chip-label">Chip</InputLabel>
-                        <Select
-                        labelId="demo-mutiple-chip-label"
-                        id="demo-mutiple-chip"
-                        multiple
-                        value={personName}
-                        onChange={handleChange}
-                        input={<Input id="select-multiple-chip" />}
-                        renderValue={(selected) => (
-                            <div className={classes.chips}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value} className={classes.chip} />
-                            ))}
-                            </div>
-                        )}
-                        MenuProps={MenuProps}
-                        >
-                        {names.map((name) => (
-                            <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
-                            {name}
-                            </MenuItem>
-                        ))}
-                        </Select>
-                    </FormControl>
-                </form> */}
-            </div>
+            <form onSubmit={this.handleSubmit} noValidate>
+                <TextField id='standard-basic' label='Search String' name='searchString'/>
+                <TextField id='standard-basic'label='Subreddit' name='subReddits'/>
+                <Button variant='contained' color='primary' type='submit'>Submit</Button>
+            </form>
         )
     }
 }
 
-export default RequisitionForm;
+const mapState = (state) => ({
+    user: state.user
+})
+
+const mapDispatch = (dispatch) => ({
+    addRequisition: (requisition) => dispatch(addRequisition(requisition))
+})
+export default connect(mapState,mapDispatch)(RequisitionForm);

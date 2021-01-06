@@ -11,17 +11,24 @@ router.get('/', async(req,res,next) => {
         if(reqId){
             posts = await Post.findAll({
                 where: {requisitionId: [reqId]},
-                include: [{model: Requisition, include: [{model:User}]}]
+                include: [{
+                    model: Requisition, 
+                    where: {
+                        userId: req.session.userId
+                    }
+                }]
             })
         } else{
-            console.log('I make it to findAll')
             posts = await Post.findAll({
-                include: [{model: Requisition, include: [{model:User}]}]
+                include: [{
+                    model: Requisition, 
+                    where: {
+                        userId: req.session.userId
+                    }
+                }]
             }); 
-        }
-        if(posts.length === 0){
-            res.send('I work but cant find anything');
-        } else{
+
+        } if(posts.length) {
             res.send(posts);
         }
     } catch (error) {
@@ -37,13 +44,6 @@ router.get('/:postId', async(req,res,next) => {
         next(error);
     }
 })
-
-//r.getHot().map(post => post).then(console.log);
-
-//subreddit_name_prefixed
-//title
-//selftext - or use innate search
-//media - url_overridden_by_dest
 
 
 module.exports = router;

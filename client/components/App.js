@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, withRouter} from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect} from 'react-router-dom'
 import AllPosts from './AllPosts';
 import Settings from './Settings';
 import Navbar from './Navbar';
@@ -12,17 +12,17 @@ const App = withRouter( class extends React.Component {
 
     async componentDidMount(){
         this.props.getUser();
-        this.props.history.push('/posts');
     }
 
     render(){
+        const { history, user } = this.props;  
         return (
             <div>
                 <Navbar />
                 <Switch>
-                    <Route exact path='/' component={Landing}/>
                     <Route exact path='/posts' component={AllPosts} />
                     <Route exact path='/settings' component={Settings} />
+                    <Route exact path='/' component={Landing} />
                 </Switch>
             </div>
         )
