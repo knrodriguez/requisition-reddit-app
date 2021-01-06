@@ -22,7 +22,7 @@ router.get('/:reqId', async(req,res,next) => {
         const searchString = requisition.dataValues.searchString;
         const fetchedPosts = await queryReddit(subReddits, searchString, reqId);
         const insertedPosts = await Post.bulkCreate(fetchedPosts);
-        if(insertedPosts) res.sendStatus(200);
+        if(insertedPosts) res.status(200).send(insertedPosts);
     } catch (error) {
         next(error);
     }

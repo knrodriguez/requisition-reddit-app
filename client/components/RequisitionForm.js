@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { addRequisition } from '../reducers/requisitionReducer';
 import { connect } from 'react-redux';
+import { getPostsFromReddit } from '../reducers/postsReducer';
 
 class RequisitionForm extends React.Component {
     constructor(){
@@ -14,10 +15,14 @@ class RequisitionForm extends React.Component {
         event.preventDefault();
         try {
             const target = event.target;
-            this.props.addRequisition({
+            const newRequisition = {
                 searchString: target.searchString.value,
                 subReddits:  target.subReddits.value.split(','),
-                userId: this.props.user.id});
+                userId: this.props.user.id
+            }
+            this.props.addRequisition(newRequisition).then(() => {
+                this.props.getPostsFromReddit(this.props.requisition.id)
+            });
         } catch (error) {
             console.error('Cannot submit new requisition', error.stack);
         }
@@ -35,10 +40,12 @@ class RequisitionForm extends React.Component {
 }
 
 const mapState = (state) => ({
-    user: state.user
+    user: state.user,
+    requisition: state.requisition
 })
 
 const mapDispatch = (dispatch) => ({
-    addRequisition: (requisition) => dispatch(addRequisition(requisition))
+    addRequisition: (requisition) => dispatch(addRequisition(requisition)),
+    getPostsFromReddit: (reqId) => dispatch(getPostsFromReddit(reqId))
 })
 export default connect(mapState,mapDispatch)(RequisitionForm);

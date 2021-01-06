@@ -32,7 +32,7 @@ router.get('/:requisitionId', async(req,res,next) => {
 router.post('/', async(req,res,next) => {
     try {
         const newReq = await Requisition.create(req.body);
-        if(newReq) res.sendStatus(201);
+        if(newReq) res.send(newReq);
     } catch (error) {
         next(error);
     }
