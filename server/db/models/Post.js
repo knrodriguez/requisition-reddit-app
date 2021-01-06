@@ -10,15 +10,16 @@ module.exports = db.define('post', {
         }
     },
     redditUrl: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
+        unique: true,
         validate: {
             notEmpty: true,
             isURL: true
         }
     },
     imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
     },
     subReddit: {
         type: Sequelize.STRING,
@@ -26,6 +27,12 @@ module.exports = db.define('post', {
         validate:{
             notEmpty: true
         }
-    }, 
-    
+    },
+    body: {
+        type: Sequelize.TEXT,
+    }
 })
+
+// Post.beforeCreate((post) => {
+//     p
+// })

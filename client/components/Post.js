@@ -29,7 +29,7 @@ export default (props) => {
                             {post.title}
                         </Typography>
                         <Typography>
-                            {`Post Text Will Go Here`}
+                            {post.body}
                         </Typography>
                     </CardContent>
                 </CardActionArea>

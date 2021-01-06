@@ -17,3 +17,7 @@ module.exports = db.define('user', {
         }
     }
 })
+
+// User.beforeCreate((user) => {
+//     user.password = hash(user.password);
+// })
