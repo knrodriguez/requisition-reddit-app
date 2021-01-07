@@ -15,11 +15,14 @@ class AllPosts extends React.Component {
         }
     }
 
-    componentDidMount(){
-        const { user, getPostsFromDb } = this.props;
-        if(user.id){
-            getPostsFromDb(user.id).then(() => this.setState({isLoading:false})); //hardcoding userId = 1
-        } 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.user !== this.props.user){
+            const { user, getPostsFromDb } = this.props;
+            if(user.id){
+                getPostsFromDb(user.id)
+                    .then(() => this.setState({isLoading:false}));
+            } 
+        }
     }
 
     render(){
@@ -27,21 +30,17 @@ class AllPosts extends React.Component {
         posts = posts || [];
         return (
             <div>
-                {!user.id ? history.push('/'): (
-                <div>
-                    <RequisitionForm />
-                    <div className='postBlock'>
-                        <h2>Posts</h2>
-                        <div className='posts'>
-                        {posts.map(post => 
-                            <Post key={post.id} post={post} />)}
-                        </div>
+                <RequisitionForm />
+                <div className='postBlock'>
+                    <h2>Posts</h2>
+                    <div className='posts'>
+                    {posts.map(post => 
+                        <Post key={post.id} post={post} />)}
                     </div>
-                    <Fab className={'fab'} href={'#'}>
-                        <NavigationIcon/>
-                    </Fab>
                 </div>
-                )}
+                <Fab className={'fab'} href={'#'}>
+                    <NavigationIcon/>
+                </Fab>
             </div>   
         );
     }

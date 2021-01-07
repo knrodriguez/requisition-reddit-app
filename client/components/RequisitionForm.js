@@ -32,7 +32,7 @@ class RequisitionForm extends React.Component {
 
     createSchedule(reqId){
         const { requisition, getPostsFromReddit } = this.props;
-        return cron.job({
+        cron.job({
             cronTime: '*/1 * * * *',
             onTick: function() {
                 console.log('running every min for reqId', reqId, requisition.searchString);

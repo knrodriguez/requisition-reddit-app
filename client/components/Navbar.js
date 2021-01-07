@@ -25,6 +25,22 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+// class Navbar extends React.Component {
+//     render(){
+//         return (
+//             <div>
+
+//             </div>
+//         )
+//     }
+// }
+
+// const mapState = (state) => {
+//     user: state.user
+// }
+
+// export default connect(mapState, null)(Navbar); 
+
 export default function Navbar() {
     const classes = useStyles();
     const [auth, setAuth] = React.useState(true);
@@ -99,15 +115,3 @@ export default function Navbar() {
         </div>
     );
 }
-
-// class Navbar extends React.Component {
-//     render(){
-//         return (
-//             <div>
-
-//             </div>
-//         )
-//     }
-// }
-
-// export default Navbar; 
