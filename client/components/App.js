@@ -5,26 +5,27 @@ import AllPosts from './AllPosts';
 import Settings from './Settings';
 import Navbar from './Navbar';
 import { Landing } from './Landing';
+import { NotFound } from './NotFound';
 import { getMe } from '../reducers/userReducer';
+
 
 
 const App = withRouter( class extends React.Component {
 
     async componentDidMount(){
-        console.log('inside app component did mount');
         this.props.getUser();
     }
 
     render(){
-        console.log('inside app render');
-        const { history, user } = this.props;  
+        const { history, user } = this.props; 
         return (
             <div>
                 <Navbar />
                 <Switch>
-                    <Route exact path='/posts' component={AllPosts} />
+                    { user.id && <Route exact path='/posts' component={AllPosts} /> }
                     <Route exact path='/settings' component={Settings} />
                     <Route exact path='/' component={Landing} />
+                    <Route component={NotFound} />
                 </Switch>
             </div>
         )

@@ -42,4 +42,13 @@ router.put('/login', async(req,res,next) => {
     }
 })
 
+router.delete('/logout', (req,res,next) => {
+    try {
+        req.session.destroy();
+        res.status(204).end();
+    } catch (error) {
+        
+    }
+})
+
 module.exports = router;

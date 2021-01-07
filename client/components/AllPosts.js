@@ -13,21 +13,33 @@ class AllPosts extends React.Component {
         this.state = {
             isLoading: true
         }
+        this.getUsersPosts = this.getUsersPosts.bind(this);
+    }
+
+    componentDidMount(){
+        this.getUsersPosts();
     }
 
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.user !== this.props.user){
-            const { user, getPostsFromDb } = this.props;
-            if(user.id){
-                getPostsFromDb(user.id)
-                    .then(() => this.setState({isLoading:false}));
-            } 
+            this.getUsersPosts();
         }
+    }
+
+    getUsersPosts(){
+        const { user, getPostsFromDb } = this.props;
+        if(user.id){
+            getPostsFromDb(user.id)
+                .then(() => this.setState({isLoading:false}));
+        } 
     }
 
     render(){
         let { user, posts, history } = this.props;
         posts = posts || [];
+        if(!user.id){
+            return <Redirect to={{pathname: '/'}} />
+        }
         return (
             <div>
                 <RequisitionForm />
@@ -38,7 +50,7 @@ class AllPosts extends React.Component {
                         <Post key={post.id} post={post} />)}
                     </div>
                 </div>
-                <Fab className={'fab'} href={'#'}>
+                <Fab className='fab' href={'#'}>
                     <NavigationIcon/>
                 </Fab>
             </div>   
@@ -46,7 +58,7 @@ class AllPosts extends React.Component {
     }
 }
 
-const mapState = (state, redirect) => ({
+const mapState = (state) => ({
     posts: state.posts,
     user: state.user,
 });

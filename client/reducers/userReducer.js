@@ -30,6 +30,17 @@ export const getMe = () => {
     }
 }
 
+export const logout = () => {
+    return async (dispatch) => {
+        try {
+            await axios.delete('/auth/logout');
+            dispatch(getUser({}));
+        } catch (error) {
+            console.error('An error has occured in the LOGOUT thunk', error);
+        }
+    }
+}
+
 export default (state = {}, action) => {
     switch(action.type){
         case GET_USER:
