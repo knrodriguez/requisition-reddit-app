@@ -1,7 +1,8 @@
 const db = require('../database');
 const Sequelize = require('sequelize');
+const passwordHash = require('password-hash');
 
-module.exports = db.define('user', {
+const User = db.define('user', {
     username: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -18,6 +19,12 @@ module.exports = db.define('user', {
     }
 })
 
-// User.beforeCreate((user) => {
-//     user.password = hash(user.password);
-// })
+User.beforeCreate((user) => {
+    user.password = passwordHash.generate(user.password);
+})
+
+User.beforeUpdate((user) => {
+    user.password = passwordHash.generate(user.password);
+})
+
+module.exports = User;

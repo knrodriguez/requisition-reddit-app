@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User } = require('./db');
+const passwordHash = require('password-hash')
 
 const userNotFound = (next) => {
     const err = new Error("User Not Found");
@@ -25,11 +26,10 @@ router.put('/login', async(req,res,next) => {
         const { username, password } = req.body;
         const user = await User.findOne({
             where: { 
-                username: username, 
-                password: password 
+                username: username
             }
         })
-        if(user) {
+        if(user && passwordHash.verify(password, user.password)) {
             req.session.userId = user.id;
             res.send(user);
         } else{
