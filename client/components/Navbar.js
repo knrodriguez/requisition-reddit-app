@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
@@ -43,14 +40,20 @@ function Navbar(props) {
     };
 
     const handleClose = (action) => {
-        setAnchorEl(null);
         switch(action){
             case 'logout':
                 props.logout();
+                break;
             default:
-                return;
+                break;
         }
+        setAnchorEl(null);
     };
+
+    const goToPosts = () => {
+        setAnchorEl(null);
+        <Redirect to='/posts' />
+    }
 
     return (
         <div className={classes.root}>
@@ -85,8 +88,8 @@ function Navbar(props) {
                     open={open}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                    <MenuItem component={Link} to='/posts' onClick={handleClose}>Posts</MenuItem>
+                    <MenuItem onClick={handleClose}>My Profile</MenuItem>
                     <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
                 </Menu>
                 </div>
