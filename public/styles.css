@@ -1,0 +1,30 @@
+.postBlock{
+    display:flex;
+    flex-direction: column;
+}
+
+.posts {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.requisitionForm{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5em;
+}
+
+.requisitionForm * {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.fab {
+    position: fixed !important;
+    right: 20px;
+    bottom: 30px;
+}

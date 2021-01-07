@@ -1,8 +1,11 @@
 import { connect } from 'react-redux';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import RequisitionForm from './RequisitionForm';
 import Post from './Post';
 import { getPostsFromDb, getPostsFromReddit } from '../reducers/postsReducer';
+import Fab from '@material-ui/core/Fab';
+import NavigationIcon from '@material-ui/icons/Navigation';
 
 class AllPosts extends React.Component {
     constructor(){
@@ -27,11 +30,16 @@ class AllPosts extends React.Component {
                 {!user.id ? history.push('/'): (
                 <div>
                     <RequisitionForm />
-                    <div>
+                    <div className='postBlock'>
                         <h2>Posts</h2>
+                        <div className='posts'>
                         {posts.map(post => 
                             <Post key={post.id} post={post} />)}
+                        </div>
                     </div>
+                    <Fab className={'fab'} href={'#'}>
+                        <NavigationIcon/>
+                    </Fab>
                 </div>
                 )}
             </div>   

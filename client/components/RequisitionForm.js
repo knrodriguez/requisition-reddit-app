@@ -50,10 +50,10 @@ class RequisitionForm extends React.Component {
     
     render(){
         return(
-            <form onSubmit={this.handleSubmit} noValidate>
+            <form className='requisitionForm' onSubmit={this.handleSubmit} noValidate>
                 <TextField id='standard-basic' label='Search String' name='searchString'/>
-                <TextField id='standard-basic'label='Subreddit' name='subReddits'/>
-                <Button variant='contained' color='primary' type='submit'>Submit</Button>
+                <TextField id='standard-basic'label='Subreddit(s)' name='subReddits'/>
+                <Button waves='light' variant='contained' color='primary' type='submit'>Submit</Button>
             </form>
         )
     }
