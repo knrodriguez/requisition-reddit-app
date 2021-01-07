@@ -10,7 +10,6 @@ export const createRequisition = (requisition) => ({
 export const addRequisition = (requisition) => {
     return async (dispatch) => {
         try {
-            console.log(requisition);
             const { data } = await axios.post(`/api/requisitions`, requisition);
             dispatch(createRequisition(data));
         } catch (error) {

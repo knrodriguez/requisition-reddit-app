@@ -32,7 +32,3 @@ module.exports = db.define('post', {
         type: Sequelize.TEXT,
     }
 })
-
-// Post.beforeCreate((post) => {
-//     p
-// })

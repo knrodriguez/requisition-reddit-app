@@ -11,6 +11,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "node-cron": "^2.0.3",
+    "password-hash": "^1.2.2",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "react": "^17.0.1",
@@ -22,6 +23,7 @@
     "redux-thunk": "^2.3.0",
     "sequelize": "^6.3.5",
     "snoowrap": "^1.22.0",
+    "tz-offset": "0.0.2",
     "volleyball": "^1.5.1"
   },
   "devDependencies": {

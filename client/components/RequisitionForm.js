@@ -4,11 +4,13 @@ import Button from '@material-ui/core/Button';
 import { addRequisition } from '../reducers/requisitionReducer';
 import { connect } from 'react-redux';
 import { getPostsFromReddit } from '../reducers/postsReducer';
+import cron from 'node-cron';
 
 class RequisitionForm extends React.Component {
     constructor(){
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.createSchedule = this.createSchedule.bind(this);
     }
 
     handleSubmit(event) {
@@ -21,11 +23,18 @@ class RequisitionForm extends React.Component {
                 userId: this.props.user.id
             }
             this.props.addRequisition(newRequisition).then(() => {
-                this.props.getPostsFromReddit(this.props.requisition.id)
+                this.createSchedule(this.props.requisition.id)
             });
         } catch (error) {
             console.error('Cannot submit new requisition', error.stack);
         }
+    }
+
+    createSchedule(reqId){
+        cron.schedule('*/1 * * * *', () => {
+            console.log('running every min for reqId', reqId, this.props.requisition.searchString);
+            this.props.getPostsFromReddit(reqId)
+        })
     }
     
     render(){

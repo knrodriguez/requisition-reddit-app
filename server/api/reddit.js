@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const snoowrap = require('snoowrap');
-const cron = require('node-cron');
 const dotenv = require('dotenv');
 const { Requisition, Post } = require('../db');
 dotenv.config();
