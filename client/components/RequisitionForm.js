@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import { addRequisition } from '../reducers/requisitionReducer';
 import { connect } from 'react-redux';
 import { getPostsFromReddit } from '../reducers/postsReducer';
-import cron from 'node-cron';
+import cron from 'cron';
 
 class RequisitionForm extends React.Component {
     constructor(){
@@ -23,7 +23,7 @@ class RequisitionForm extends React.Component {
                 userId: this.props.user.id
             }
             this.props.addRequisition(newRequisition).then(() => {
-                this.createSchedule(this.props.requisition.id)
+                this.createSchedule(this.props.requisition.id) //import cron file for creating schedules 
             });
         } catch (error) {
             console.error('Cannot submit new requisition', error.stack);
@@ -31,10 +31,21 @@ class RequisitionForm extends React.Component {
     }
 
     createSchedule(reqId){
-        cron.schedule('*/1 * * * *', () => {
-            console.log('running every min for reqId', reqId, this.props.requisition.searchString);
-            this.props.getPostsFromReddit(reqId)
+        const { requisition, getPostsFromReddit } = this.props;
+        return cron.job({
+            cronTime: '*/1 * * * *',
+            onTick: function() {
+                console.log('running every min for reqId', reqId, requisition.searchString);
+                getPostsFromReddit(reqId);
+            },
+            start:true,
+            timezone: 'US/Central'
         })
+
+        // cron.schedule('*/1 * * * *', () => {
+        //     console.log('running every min for reqId', reqId, this.props.requisition.searchString);
+        //     this.props.getPostsFromReddit(reqId)
+        // })
     }
     
     render(){
