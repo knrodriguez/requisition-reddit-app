@@ -50,11 +50,6 @@ function Navbar(props) {
         setAnchorEl(null);
     };
 
-    const goToPosts = () => {
-        setAnchorEl(null);
-        <Redirect to='/posts' />
-    }
-
     return (
         <div className={classes.root}>
         <AppBar position="static">
@@ -90,7 +85,7 @@ function Navbar(props) {
                 >
                     <MenuItem component={Link} to='/posts' onClick={handleClose}>Posts</MenuItem>
                     <MenuItem onClick={handleClose}>My Profile</MenuItem>
-                    <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
+                    <MenuItem component={Link} to='/' onClick={() => handleClose('logout')}>Logout</MenuItem>
                 </Menu>
                 </div>
             ) : (
@@ -107,9 +102,8 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch, ownProps) => {
-    const history = ownProps.history;
     return {
-        logout: () => {dispatch(logout()); history.push('/');}
+        logout: () => dispatch(logout())
     } 
 }
 

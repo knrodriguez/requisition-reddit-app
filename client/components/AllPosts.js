@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import RequisitionForm from './RequisitionForm';
 import Post from './Post';
 import { getPostsFromDb, getPostsFromReddit } from '../reducers/postsReducer';
@@ -37,9 +36,6 @@ class AllPosts extends React.Component {
     render(){
         let { user, posts, history } = this.props;
         posts = posts || [];
-        if(!user.id){
-            return <Redirect to={{pathname: '/'}} />
-        }
         return (
             <div>
                 <RequisitionForm />
