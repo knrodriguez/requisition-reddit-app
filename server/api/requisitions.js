@@ -3,14 +3,21 @@ const router = require('express').Router();
 
 //HAVE TO ADD USERIDs to each method
 
+const missingUser = () => {
+    const err = new Error ('Missing UserId');
+    err.status = 500;
+    next(err);
+}
+
 router.get('/', async(req,res,next) => {
     try {
-        const reqs = await Requisition.findAll();
-        if(reqs.length === 0){
-            res.send('I work but cant find anything');
-        } else{
-            res.send(reqs);
+        if(!req.session.userId){
+            missingUser();
         }
+        const requisitions = await Requisition.findAll({
+            where: {userId: req.session.userId}
+        });
+        if(requisitions) res.send(requisitions);
     } catch (error) {
         next(error);
     }
@@ -18,9 +25,13 @@ router.get('/', async(req,res,next) => {
 
 router.get('/:requisitionId', async(req,res,next) => {
     try {
+        if(!req.session.userId){
+            missingUser();
+        }
         const posts = await Post.findAll({
             where: {
-                requisitionId: [req.params.requisitionId]
+                requisitionId: [req.params.requisitionId],
+                userId: req.session.userId
             }
         })
         res.send(posts);
@@ -31,6 +42,9 @@ router.get('/:requisitionId', async(req,res,next) => {
 
 router.post('/', async(req,res,next) => {
     try {
+        if(!req.session.userId){
+            missingUser();
+        }
         const newReq = await Requisition.create(req.body);
         if(newReq) res.send(newReq);
     } catch (error) {

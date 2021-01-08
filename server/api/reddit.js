@@ -7,7 +7,7 @@ dotenv.config();
 //HAVE TO ADD USERIDs to each method
 
 const r = new snoowrap({
-    userAgent: 'fds this needs to be dfsd fsdwerff',
+    userAgent: 'web:com.requisition-reddit--version-1.0',
     clientId: process.env.REDDIT_CLIENT_ID,
     clientSecret: process.env.REDDIT_SECRET_TOKEN,
     refreshToken: process.env.REDDIT_REFRESH_TOKEN
@@ -45,7 +45,7 @@ async function queryReddit(subReddits, searchString, reqId){
             allNewPosts.push(...posts.map(post => ({
                 title: post.title, 
                 redditUrl: `https://www.reddit.com${post.permalink}`,
-                imageUrl: post.preview ? post.preview.images[0].source.url : null, //source image - maybe take thumbnail?
+                imageUrl: post.preview ? post.preview.images[0].source.url : null,
                 subReddit: subReddits[i],
                 body: post.selftext,
                 requisitionId: reqId
