@@ -5,6 +5,7 @@ import Post from './Post';
 import { getPostsFromDb, getPostsFromReddit } from '../reducers/postsReducer';
 import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
+import { Typography } from '@material-ui/core';
 
 class AllPosts extends React.Component {
     constructor(){
@@ -35,7 +36,8 @@ class AllPosts extends React.Component {
     }
 
     handleClick(event) {
-        const anchor = document.querySelector('#navbar');
+        const anchor = document.getElementById('navbar');
+        console.log(anchor);
         if(anchor){
             anchor.scrollIntoView();
         }
@@ -48,7 +50,7 @@ class AllPosts extends React.Component {
             <div>
                 <RequisitionForm />
                 <div className='postBlock'>
-                    <h2>Posts</h2>
+                    <Typography variant='h3'>Posts</Typography>
                     <div className='posts'>
                     {posts.map(post => 
                         <Post key={post.id} post={post} />)}

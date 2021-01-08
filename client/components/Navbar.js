@@ -40,7 +40,7 @@ function Navbar(props) {
     };
 
     return (
-        <div className={`${classes.root} navbar`}>
+        <div id='navbar' className={`${classes.root}`}>
         <AppBar position="static">
             <Toolbar>
             <Typography variant="h6" className={classes.title}>
