@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, IconButton, MenuItem, Menu, Button } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { logout } from '../reducers/userReducer';
+import { emptyPosts } from '../reducers/postsReducer';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,6 +33,7 @@ function Navbar(props) {
         switch(action){
             case 'logout':
                 props.logout();
+                props.emptyPosts();
                 break;
             default:
                 break;
@@ -92,7 +94,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch, ownProps) => {
     return {
-        logout: () => dispatch(logout())
+        logout: () => dispatch(logout()),
+        emptyPosts: () => dispatch(emptyPosts())
     } 
 }
 

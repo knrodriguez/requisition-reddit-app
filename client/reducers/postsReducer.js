@@ -3,6 +3,7 @@ import axios from 'axios';
 const GET_MY_POSTS = 'GET_MY_POSTS';
 const GET_REDDIT_POSTS = 'GET_REDDIT_POSTS';
 const DELETED_POST = 'DELETED_POST';
+const EMPTY_POSTS = 'EMPTY_POST';
 
 const getPosts = (posts, from) => ({
     type: from === 'reddit' ? GET_REDDIT_POSTS : GET_MY_POSTS,
@@ -12,6 +13,11 @@ const getPosts = (posts, from) => ({
 const deletedPost = (postId) => ({
     type: DELETED_POST,
     postId
+})
+
+export const emptyPosts = () => ({
+    type: EMPTY_POSTS,
+    posts: []
 })
 
 export const getPostsFromReddit = (reqId) => {
@@ -50,11 +56,13 @@ export const deletePost = (postId) => {
 export default (state = [], action) => {
     switch(action.type){
         case GET_MY_POSTS:
-            return [...state, ...action.posts];
+            return [...action.posts, ...state];
         case GET_REDDIT_POSTS:
-            return [...state, ...action.posts];
+            return [...action.posts, ...state];
         case DELETED_POST:
-            return state.filter(post => post.id !== action.postId)
+            return state.filter(post => post.id !== action.postId);
+        case EMPTY_POSTS:
+            return action.posts
         default:
             return state;
     }
