@@ -13,6 +13,7 @@ class AllPosts extends React.Component {
             isLoading: true
         }
         this.getUsersPosts = this.getUsersPosts.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount(){
@@ -33,6 +34,13 @@ class AllPosts extends React.Component {
         } 
     }
 
+    handleClick(event) {
+        const anchor = document.querySelector('#navbar');
+        if(anchor){
+            anchor.scrollIntoView();
+        }
+    }
+
     render(){
         let { user, posts, history } = this.props;
         posts = posts || [];
@@ -46,7 +54,7 @@ class AllPosts extends React.Component {
                         <Post key={post.id} post={post} />)}
                     </div>
                 </div>
-                <Fab className='fab' href={'#'}>
+                <Fab className='fab' onClick={this.handleClick}>
                     <NavigationIcon/>
                 </Fab>
             </div>   

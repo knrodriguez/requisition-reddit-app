@@ -41,3 +41,32 @@
     width: 100%;
     height: auto;
 }
+
+.landing-page {
+    display: flex;
+    flex-direction: row;
+    height: 65vh;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.landing-page p{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.landing-page h4{
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form button {
+    margin-top: 5%;
+}
