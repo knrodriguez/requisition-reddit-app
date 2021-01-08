@@ -44,7 +44,7 @@ class AllPosts extends React.Component {
     }
 
     render(){
-        let { user, posts, history } = this.props;
+        let { posts } = this.props;
         posts = posts || [];
         return (
             <div>
