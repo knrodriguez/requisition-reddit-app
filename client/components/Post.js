@@ -1,7 +1,9 @@
 import { CardActionArea, Typography, Card, CardActions, CardMedia, CardContent, Button, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react'
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { deletePost } from '../reducers/postsReducer';
 
 const useStyles = makeStyles({
     root:{
@@ -16,13 +18,16 @@ const useStyles = makeStyles({
     }
 });
 
-export default (props) => {
+ const Post = (props) => {
     const { post } = props;
     const classes = useStyles();
 
+    const handleDelete = (postId) => {
+        props.deletePost(postId);
+    }
+
     return(
         <div>
-            
             <Card className={classes.root}>
                 <Link style={{ textDecoration: 'none'}} to={{pathname: `${post.redditUrl}`}} target="_blank">
                   <CardActionArea>
@@ -45,7 +50,7 @@ export default (props) => {
                     <Button size="small" color="primary" href={`${post.redditUrl}`} target="_blank" rel="noopener">
                         View Post
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => handleDelete(post.id)}>
                         Delete
                     </Button>
                 </CardActions>
@@ -53,3 +58,9 @@ export default (props) => {
         </div>
     )
 };
+
+const mapDispatch = (dispatch) => ({
+    deletePost: (postId) => dispatch(deletePost(postId))
+})
+
+export default connect(null, mapDispatch)(Post)
