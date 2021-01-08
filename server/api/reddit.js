@@ -45,7 +45,7 @@ async function queryReddit(subReddits, searchString, reqId){
             allNewPosts.push(...posts.map(post => ({
                 title: post.title, 
                 redditUrl: `https://www.reddit.com${post.permalink}`,
-                imageUrl: post.preview ? post.preview.images[0].source.url : '', //source image - maybe take thumbnail?
+                imageUrl: post.preview ? post.preview.images[0].source.url : null, //source image - maybe take thumbnail?
                 subReddit: subReddits[i],
                 body: post.selftext,
                 requisitionId: reqId
