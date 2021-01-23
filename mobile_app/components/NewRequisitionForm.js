@@ -1,8 +1,27 @@
 import React, { useState }from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, TextInput } from 'react-native';
-import {NewRequisitionForm} from './NewRequisitionForm';
 
 export default function NewRequisitionForm() {
+    const [requisitions, setRequisitions] = useState([]);
+    const [searchString, setSearchString] = useState('');
+    const [subreddit, setSubreddit] = useState('');
+    
+    const searchReddit = (enteredText) => {
+      setRequisitions([...requisitions, {       
+        searchString: searchString,
+        subreddit: subreddit,
+      }])
+      console.log(requisitions);
+    }
+  
+    const handleSubreddit = (enteredText) => {
+      setSubreddit(enteredText);
+    }
+  
+    const handleSearchString = (enteredText) => {
+      setSearchString(enteredText);
+    }
+
     return(
         <View>
             <TextInput 
@@ -19,3 +38,11 @@ export default function NewRequisitionForm() {
         </View>
     )
 };
+
+const styles = StyleSheet.create({
+    textInput: {
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+    },
+})
+    
