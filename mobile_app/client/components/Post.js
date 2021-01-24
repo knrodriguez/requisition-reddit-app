@@ -3,17 +3,18 @@ import {Pressable, View, StyleSheet, Text, Modal, Button} from 'react-native'
 import PostModal from './PostModal';
 
 export default function Post(props) {
-
-    const openModal = () => {
-        <PostModal id={props.post.id}/>
+    const [openModal, setOpenModal] = useState(false);
+    const showModal = () => {
+        setOpenModal(true);
         //delete icon
         //share icon
     }
     console.log(props)
     return(
-        <Pressable android_ripple={{color:'gray'}} onPress={openModal} onLongPress={openModal}>
+        <Pressable android_ripple={{color:'gray'}} onPress={showModal} onLongPress={showModal}>
             <Modal
-                visible={modalState}
+                style={styles.modal}
+                visible={openModal}
             >
                 <View style={styles.modal}>
                     <Button title='Share' />
@@ -35,5 +36,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '4%',
+    },
+    modal:{
+        width: '60%',
+        height: 'auto'
     }
 })
