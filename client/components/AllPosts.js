@@ -45,7 +45,7 @@ class AllPosts extends React.Component {
 
     render(){
         let { posts } = this.props;
-        posts = posts || [];
+        posts = posts.sort((a,b) => b.id - a.id) || [];
         return (
             <div>
                 <RequisitionForm />

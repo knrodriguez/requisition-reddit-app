@@ -6,7 +6,6 @@ const { Post, Requisition, User } = require('../db/models');
 
 router.get('/', async(req,res,next) => {
     try {
-        let userID = req.session.userId || 1;
         let reqId = req.query.requisitionId;
         let posts;
         if(reqId){
@@ -14,22 +13,19 @@ router.get('/', async(req,res,next) => {
                 where: {requisitionId: [reqId]},
                 include: [{
                     model: Requisition, 
-                    where: {
-                        userId: userID
-                    }
+                    // where: {
+                    //     userId: userID
+                    // }
                 }]
             })
         } else{
             posts = await Post.findAll({
                 include: [{
                     model: Requisition, 
-                    where: {
-                        userId: userID
-                    }
                 }]
             }); 
-
-        } if(posts.length) {
+        } 
+        if(posts.length) {
             res.send(posts);
         }
     } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState }from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, TextInput } from 'react-native';
 import NewRequisitionForm from './NewRequisitionForm';
+import {Link} from 'react-router-native'
 
 export default function WelcomeScreen() {
  
@@ -12,6 +13,9 @@ export default function WelcomeScreen() {
         <View style={styles.newReqForm}>
           <Text style={styles.h4}>Let's get started!</Text>
           <NewRequisitionForm />
+          <Link to='/posts'>
+            <Text>POSTS</Text>
+          </Link>
         </View>
       </View>
     </View>
@@ -19,6 +23,14 @@ export default function WelcomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display:'flex',
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '4%',
+  },
   welcomeText: {
     display: 'flex',
     flexDirection: 'column',

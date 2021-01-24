@@ -24,7 +24,9 @@ export const getPostsFromReddit = (reqId) => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get(`/api/reddit/${reqId}`);
-            dispatch(getPosts(data, 'reddit'));
+            if(Array.isArray(data)){
+                dispatch(getPosts(data, 'reddit'));
+            }
         } catch (error) {
             console.error('Error inside getPostsFromReddit thunk', error);
         }

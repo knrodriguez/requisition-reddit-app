@@ -1,22 +1,19 @@
 import React, { useState }from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, TextInput } from 'react-native';
-import WelcomeScreen from './components/WelcomeScreen';
+import Routes from './client/routes'
+import {Provider} from 'react-redux'
+import store from './client/store'
+import {NativeRouter} from 'react-router-native'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <WelcomeScreen />
-    </View>
+    <Provider store={store}>
+      <NativeRouter>
+        <Routes/>
+      </NativeRouter>
+      {/* <View style={styles.container}>
+        <WelcomeScreen />
+      </View> */}
+    </Provider>
+
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    display:'flex',
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '4%',
-  }
-});
