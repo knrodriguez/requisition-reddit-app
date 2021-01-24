@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     post: {
         display: 'flex',
-        height: '90px',
+        height: '90%',
         width:'auto'
     }
 })

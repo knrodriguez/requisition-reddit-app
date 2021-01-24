@@ -1,28 +1,36 @@
 import React, {useState} from 'react';
-import {Pressable, View, StyleSheet, Text, Modal, Button} from 'react-native'
+import {Pressable, View, StyleSheet, Text, Modal, Button, Image} from 'react-native'
 import PostModal from './PostModal';
 
 export default function Post(props) {
     const [openModal, setOpenModal] = useState(false);
     const showModal = () => {
         setOpenModal(true);
-        //delete icon
-        //share icon
     }
-    console.log(props)
+    const closeModal = () => {
+        setOpenModal(false);
+    }
+    const post = props.post.item;
     return(
-        <Pressable android_ripple={{color:'gray'}} onPress={showModal} onLongPress={showModal}>
+        <Pressable android_ripple={{color:'gray'}}  onLongPress={showModal}>
+            <View style={styles.modal}>
             <Modal
-                style={styles.modal}
                 visible={openModal}
+                presentationStyle='overFullScreen'
+                transparent={true}
+                onRequestClose={closeModal}
             >
                 <View style={styles.modal}>
-                    <Button title='Share' />
-                    <Button title='Delete'/>
+                    <View style={styles.modalButtons}>
+                        <Button title='Share' />
+                        <Button title='Delete'/>
+                    </View>
                 </View>
             </Modal>
             <View style={styles.container}>
+                <Image source={{uri: post.imageUrl}} style={styles.postImage}/>
                 <Text>{props.post.item.title}</Text>
+            </View>
             </View>
         </Pressable>
     )
@@ -38,7 +46,27 @@ const styles = StyleSheet.create({
         padding: '4%',
     },
     modal:{
-        width: '60%',
-        height: 'auto'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalButtons: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    postImage: {
+        width: 150,
+        height: 150
     }
 })
