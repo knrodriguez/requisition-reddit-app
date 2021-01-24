@@ -2,6 +2,7 @@ const router = require('express').Router();
 const snoowrap = require('snoowrap');
 const dotenv = require('dotenv');
 const { Requisition, Post } = require('../db');
+const e = require('express');
 dotenv.config();
 
 //HAVE TO ADD USERIDs to each method
@@ -21,13 +22,21 @@ router.get('/:reqId', async(req,res,next) => {
         const searchString = requisition.dataValues.searchString;
         const fetchedPosts = await queryReddit(subReddits, searchString, reqId);
         const insertedPosts = [];
-        for(const post of fetchedPosts){
+        for(let i = 0; i < fetchedPosts.length; i++){
             const [instance, wasCreated] = await Post.findOrCreate({
-                where: {...post}
+                where: {...fetchedPosts[i]},
+                defaults:{...fetchedPosts[i]}
             });
+            console.log('CREATED:',wasCreated)
             if(wasCreated) { insertedPosts.push(instance); } 
+            console.log('INSERTED', insertedPosts);
         }
-        res.status(200).send(insertedPosts);
+        console.log('INSERTEDPOSTS:',insertedPosts)
+        if(insertedPosts.length > 0){
+            res.sendStatus(200)
+        } else{ 
+            res.status(200).send(insertedPosts);
+        }
     } catch (error) {
         next(error);
     }
@@ -48,7 +57,7 @@ async function queryReddit(subReddits, searchString, reqId){
                 imageUrl: post.preview ? post.preview.images[0].source.url : null,
                 subReddit: subReddits[i],
                 body: post.selftext,
-                requisitionId: reqId
+                requisitionId: parseInt(reqId)
             })));
         }
         return allNewPosts;
