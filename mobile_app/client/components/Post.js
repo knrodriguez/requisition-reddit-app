@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {Pressable, View, StyleSheet, Text, Modal, Button, Image, Share} from 'react-native'
-import {Redirect} from 'react-router-native'
-import * as Linking from 'expo-linking'
+import {Pressable, View, StyleSheet, Modal, Button, Image, Share, Text} from 'react-native'
+import * as Linking from 'expo-linking';
 
 export default function Post(props) {
     const [openModal, setOpenModal] = useState(false);
@@ -37,7 +36,7 @@ export default function Post(props) {
 
     return(
         <Pressable android_ripple={{color:'gray'}} onPress={showInReddit} onLongPress={showModal}>
-            <View style={styles.modal}>
+            <View style={styles.screen}>
                 <Modal
                     visible={openModal}
                     presentationStyle='overFullScreen'
@@ -61,17 +60,7 @@ export default function Post(props) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '4%',
-        width: '100%',
-        height: 400
-    },
-    modal:{
+    screen:{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -91,11 +80,28 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5
     },
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '4%',
+        width: '100%',
+        height: 350,
+        backgroundColor: '#1e2223',
+    },
     postImage: {
+        flex: 1,
         paddingTop: '50%',
         paddingBottom: '50%',
         width: '100%',
-        height: '100%',
+        height: '50%',
         resizeMode: 'cover'
+    },
+    title: {
+        height: '20%',
+        color: 'white'
     }
 })

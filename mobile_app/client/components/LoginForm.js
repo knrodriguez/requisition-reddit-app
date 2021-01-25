@@ -1,5 +1,5 @@
 import React, { useState }from 'react';
-import { StyleSheet, View, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Button, TextInput, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {login} from '../reducers/userReducer'
 import {Redirect} from 'react-router-native'
@@ -26,27 +26,40 @@ function LoginForm(props) {
     if(props.user.id) return <Redirect to='/posts' />;
 
     return(
-        <View>
+        <View style={styles.container}>
             <TextInput 
-                placeholder='Username' 
+                placeholder='Username'
+                placeholderTextColor='#F8F8FF'
                 style={styles.textInput} 
                 onChangeText={handleUsername} 
                 value={username} />
             <TextInput 
-                placeholder='Password' 
+                secureTextEntry={true}
+                placeholder='Password'
+                placeholderTextColor='#F8F8FF' 
                 style={styles.textInput} 
                 onChangeText={handlePassword} 
                 value={password} />
-            <Button title='Login' onPress={signin}/>
+            <Button title='Login' onPress={signin} style={styles.loginButton}/>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
-    textInput: {
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
+    container: {
+        display: 'flex',
+        flexDirection: 'column'
+
     },
+    textInput: {
+        borderBottomColor: 'white',
+        borderBottomWidth: 1,
+        color: 'white',
+        fontSize: 16,
+        marginBottom: '3%'
+    },
+    loginButton: {
+    }
 })
 
 const mapState = state => ({

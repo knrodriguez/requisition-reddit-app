@@ -29,7 +29,12 @@ router.put('/login', async(req,res,next) => {
                 username: username
             }
         })
-        if(user && passwordHash.verify(password, user.password)) {
+        if(!user){
+            const err = new Error('Username not found')
+            err.status(401)
+            err.name='UsernameNotFound'
+            next(err)
+        } else if(user && passwordHash.verify(password, user.password)) {
             res.send(user);
         } else{
             const err = new Error ('Incorrect email or password!');
