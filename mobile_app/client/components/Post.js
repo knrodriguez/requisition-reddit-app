@@ -1,35 +1,43 @@
 import React, {useState} from 'react';
 import {Pressable, View, StyleSheet, Text, Modal, Button, Image} from 'react-native'
+import {Redirect} from 'react-router-native'
+import * as Linking from 'expo-linking'
 
 export default function Post(props) {
     const [openModal, setOpenModal] = useState(false);
+    const post = props.post.item;
+
     const showModal = () => {
         setOpenModal(true);
     }
     const closeModal = () => {
         setOpenModal(false);
     }
-    const post = props.post.item;
+
+    const showInReddit = () => {
+        Linking.openURL(post.redditUrl);
+    }
+
     return(
-        <Pressable android_ripple={{color:'gray'}}  onLongPress={showModal}>
+        <Pressable android_ripple={{color:'gray'}} onPress={showInReddit} onLongPress={showModal}>
             <View style={styles.modal}>
-            <Modal
-                visible={openModal}
-                presentationStyle='overFullScreen'
-                transparent={true}
-                onRequestClose={closeModal}
-            >
-                <View style={styles.modal}>
-                    <View style={styles.modalButtons}>
-                        <Button title='Share' />
-                        <Button title='Delete'/>
+                <Modal
+                    visible={openModal}
+                    presentationStyle='overFullScreen'
+                    transparent={true}
+                    onRequestClose={closeModal}
+                >
+                    <View style={styles.modal}>
+                        <View style={styles.modalButtons}>
+                            <Button title='Share' />
+                            <Button title='Delete'/>
+                        </View>
                     </View>
+                </Modal>
+                <View style={styles.container}>
+                    <Image source={{uri: post.imageUrl}} style={styles.postImage}/>
+                    <Text>{props.post.item.title}</Text>
                 </View>
-            </Modal>
-            <View style={styles.container}>
-                <Image source={{uri: post.imageUrl}} style={styles.postImage}/>
-                <Text>{props.post.item.title}</Text>
-            </View>
             </View>
         </Pressable>
     )

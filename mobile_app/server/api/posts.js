@@ -4,27 +4,17 @@ const { Post, Requisition, User } = require('../db/models');
 
 //HAVE TO ADD USERIDs to each method
 
-router.get('/', async(req,res,next) => {
+router.get('/:userId', async(req,res,next) => {
     try {
-        let reqId = req.query.requisitionId;
-        let posts;
-        if(reqId){
-            posts = await Post.findAll({
-                where: {requisitionId: [reqId]},
-                include: [{
-                    model: Requisition, 
-                    // where: {
-                    //     userId: userID
-                    // }
-                }]
-            })
-        } else{
-            posts = await Post.findAll({
-                include: [{
-                    model: Requisition, 
-                }]
-            }); 
-        } 
+        let posts = await Post.findAll({
+            include: [{
+                model: Requisition, 
+                where: {
+                    userId: req.params.userId
+                }
+            }]
+        }); 
+        console.log(posts)
         if(posts.length) {
             res.send(posts);
         }
@@ -33,14 +23,14 @@ router.get('/', async(req,res,next) => {
     }
 })
 
-router.get('/:postId', async(req,res,next) => {
-    try {
-        const post = await Post.findByPk(req.params.postId);
-        res.send(post);
-    } catch (error) {
-        next(error);
-    }
-})
+// router.get('/:postId', async(req,res,next) => {
+//     try {
+//         const post = await Post.findByPk(req.params.postId);
+//         res.send(post);
+//     } catch (error) {
+//         next(error);
+//     }
+// })
 
 router.delete('/:postId', async(req,res,next) => {
     try {

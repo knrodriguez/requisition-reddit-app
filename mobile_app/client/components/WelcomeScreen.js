@@ -1,8 +1,7 @@
 import React, { useState }from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, TextInput } from 'react-native';
-import NewRequisitionForm from './NewRequisitionForm';
 import {Link} from 'react-router-native'
-
+import LoginForm from './LoginForm'
 export default function WelcomeScreen() {
  
   return (

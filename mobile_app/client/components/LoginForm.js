@@ -1,15 +1,12 @@
-import React, { useState, useEffect }from 'react';
+import React, { useState }from 'react';
 import { StyleSheet, View, Button, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import {login} from '../reducers/userReducer'
+import {Redirect} from 'react-router-native'
 
 function LoginForm(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    
-    useEffect(()=>{
-        <Redirect to='/posts' />
-    }, props.user)
 
     const handleUsername = (enteredText) => {
       setUsername(enteredText);
@@ -25,6 +22,8 @@ function LoginForm(props) {
             password: password
         })
     }
+    
+    if(props.user.id) return <Redirect to='/posts' />;
 
     return(
         <View>

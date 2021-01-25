@@ -30,7 +30,6 @@ router.put('/login', async(req,res,next) => {
             }
         })
         if(user && passwordHash.verify(password, user.password)) {
-            req.session.userId = user.id;
             res.send(user);
         } else{
             const err = new Error ('Incorrect email or password!');

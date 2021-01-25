@@ -3,17 +3,20 @@ import { StyleSheet, View, ScrollView, TouchableOpacity, Text, FlatList, Activit
 import { connect } from 'react-redux';
 import {fetchPostsFromDb} from '../reducers/postsReducer'
 import Post from './Post'
+
 function AllPosts(props) {
+    console.log('POSTS', props.posts)
 
     useEffect(() => {
-        props.loadPosts();
-    },[props.posts.length])
+        props.loadPosts(props.user.id);
+    },[props.posts.length || 0])
 
+    const posts = props.posts || [];
     return(
         <View style={styles.container}>
             <FlatList 
                 keyExtractor={(post) => post.id.toString()}
-                data={props.posts.sort((a,b) => b.id - a.id)} 
+                data={posts.sort((a,b) => b.id-a.id)} 
                 renderItem={post => (
                 <Post id={post.id} post={post} style={styles.post}/>
             )} style={styles.allPosts} />
@@ -22,11 +25,12 @@ function AllPosts(props) {
 }
 
 const mapState = state => ({
-    posts: state.posts
+    posts: state.posts,
+    user: state.user
 })
 
 const mapDispatch = dispatch => ({
-    loadPosts: ()=>dispatch(fetchPostsFromDb())
+    loadPosts: (userId)=>dispatch(fetchPostsFromDb(userId))
 })
 
 export default connect(mapState, mapDispatch)(AllPosts)

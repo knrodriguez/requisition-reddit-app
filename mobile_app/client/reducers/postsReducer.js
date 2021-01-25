@@ -13,10 +13,10 @@ const loadPosts = (posts) => ({
     posts
 })
 
-export const fetchPostsFromDb = () => {
+export const fetchPostsFromDb = (userId) => {
     return async dispatch => {
         try { 
-            const {data} = await axios.get('http://192.168.1.4:8080/api/posts/')
+            const {data} = await axios.get(`http://192.168.1.4:8080/api/posts/${userId}`)
             dispatch(loadPosts(data))
         } catch (error) {
             console.error(error)
