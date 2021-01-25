@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {Pressable, View, StyleSheet, Modal, Button, Image, Share, Text} from 'react-native'
+import {View, StyleSheet,Image, Share, } from 'react-native'
 import * as Linking from 'expo-linking';
+import {Card, Title, Modal, Text, Button} from 'react-native-paper'
 
 export default function Post(props) {
     const [openModal, setOpenModal] = useState(false);
     const post = props.post.item;
+    const containerStyle = {backgroundColor: 'white', padding: 20};
 
     const showModal = () => {
         setOpenModal(true);
@@ -34,28 +36,41 @@ export default function Post(props) {
         }
     }
 
-    return(
-        <Pressable android_ripple={{color:'gray'}} onPress={showInReddit} onLongPress={showModal}>
-            <View style={styles.screen}>
+    /*
                 <Modal
-                    visible={openModal}
-                    presentationStyle='overFullScreen'
-                    transparent={true}
-                    onRequestClose={closeModal}
-                >
-                    <View style={styles.modal}>
-                        <View style={styles.modalButtons}>
-                            <Button title='Share' onPress={shareRedditLink}/>
-                            <Button title='Delete' onPress={() => props.handleDelete(post.id)}/>
-                        </View>
+                visible={openModal}
+                presentationStyle='overFullScreen'
+                transparent={true}
+                onRequestClose={closeModal}
+            >
+                <View style={styles.modal}>
+                    <View style={styles.modalButtons}>
+                        <Button title='Share' onPress={shareRedditLink}/>
+                        <Button title='Delete' onPress={() => props.handleDelete(post.id)}/>
                     </View>
-                </Modal>
-                <View style={styles.container}>
-                    <Image source={{uri: post.imageUrl}} style={styles.postImage}/>
-                    <Text style={styles.title}>{props.post.item.title}</Text>
                 </View>
+            </Modal>
+            
+        */
+
+    return(
+        <View style={styles.screen}>
+            <Modal visible={openModal} onDismiss={()=>setOpenModal(false)} contentContainerStyle={containerStyle}>
+                <Text>Example Modal.  Click outside this area to dismiss.</Text>
+            </Modal>
+            <View style={styles.container}>
+                <Card style={{width: '100%'}} onPress={showInReddit} onLongPress={()=>setOpenModal(true)}>
+                    <Card.Cover source={{uri: post.imageUrl}}/>
+                    <Card.Content>
+                        <Title >{post.title}</Title>
+                    </Card.Content>
+                    <Card.Actions>
+                        <Button>Share</Button>
+                        <Button>Delete</Button>
+                    </Card.Actions>
+                </Card>
             </View>
-        </Pressable>
+        </View>
     )
 }
 
@@ -87,21 +102,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '4%',
         width: '100%',
-        height: 350,
+        // height: 350,
+        marginBottom: 50,
         backgroundColor: '#1e2223',
     },
-    postImage: {
-        flex: 1,
-        paddingTop: '50%',
-        paddingBottom: '50%',
-        width: '100%',
-        height: '50%',
-        resizeMode: 'cover'
-    },
-    title: {
-        height: '20%',
-        color: 'white'
-    }
 })

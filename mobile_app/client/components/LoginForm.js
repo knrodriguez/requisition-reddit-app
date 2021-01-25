@@ -1,5 +1,5 @@
 import React, { useState }from 'react';
-import { StyleSheet, View, Button, TextInput, Text } from 'react-native';
+import { StyleSheet, View, Button, Text, TextInput} from 'react-native';
 import { connect } from 'react-redux';
 import {login} from '../reducers/userReducer'
 import {Redirect} from 'react-router-native'
