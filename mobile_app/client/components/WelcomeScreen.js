@@ -12,10 +12,10 @@ export default function WelcomeScreen() {
         <Text>An app dedicated to letting you find, save, and filter Reddit posts to your liking.</Text>
         <View style={styles.newReqForm}>
           <Text style={styles.h4}>Let's get started!</Text>
-          <NewRequisitionForm />
-          <Link to='/posts'>
+          <LoginForm/>
+          {/* <Link to='/posts'>
             <Text>POSTS</Text>
-          </Link>
+          </Link> */}
         </View>
       </View>
     </View>
