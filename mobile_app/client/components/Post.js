@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Pressable, View, StyleSheet, Text, Modal, Button, Image} from 'react-native'
+import {Pressable, View, StyleSheet, Text, Modal, Button, Image, Share} from 'react-native'
 import {Redirect} from 'react-router-native'
 import * as Linking from 'expo-linking'
 
@@ -18,6 +18,23 @@ export default function Post(props) {
         Linking.openURL(post.redditUrl);
     }
 
+    const shareRedditLink = async () => {
+        try {
+            const result = await Share.share({message: post.redditUrl});
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                  // shared with activity type of result.activityType
+                } else {
+                  // shared
+                }
+              } else if (result.action === Share.dismissedAction) {
+                // dismissed
+              }
+        } catch (error) {
+            console.log('COULD NOT SHARE!',error)
+        }
+    }
+
     return(
         <Pressable android_ripple={{color:'gray'}} onPress={showInReddit} onLongPress={showModal}>
             <View style={styles.modal}>
@@ -29,14 +46,14 @@ export default function Post(props) {
                 >
                     <View style={styles.modal}>
                         <View style={styles.modalButtons}>
-                            <Button title='Share' />
-                            <Button title='Delete'/>
+                            <Button title='Share' onPress={shareRedditLink}/>
+                            <Button title='Delete' onPress={() => props.handleDelete(post.id)}/>
                         </View>
                     </View>
                 </Modal>
                 <View style={styles.container}>
                     <Image source={{uri: post.imageUrl}} style={styles.postImage}/>
-                    <Text>{props.post.item.title}</Text>
+                    <Text style={styles.title}>{props.post.item.title}</Text>
                 </View>
             </View>
         </Pressable>
@@ -51,6 +68,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '4%',
+        width: '100%',
+        height: 400
     },
     modal:{
         display: 'flex',
@@ -73,7 +92,10 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     postImage: {
-        width: 150,
-        height: 150
+        paddingTop: '50%',
+        paddingBottom: '50%',
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover'
     }
 })

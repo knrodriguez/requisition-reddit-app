@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity, Text, FlatList, ActivityIndicator} from 'react-native';
 import { connect } from 'react-redux';
-import {fetchPostsFromDb} from '../reducers/postsReducer'
+import {fetchPostsFromDb, deletePost} from '../reducers/postsReducer'
 import Post from './Post'
 
+
 function AllPosts(props) {
-    console.log('POSTS', props.posts)
+
+    const handleDelete = (postId) => {
+        props.removePost(postId)
+    }
 
     useEffect(() => {
         props.loadPosts(props.user.id);
@@ -14,11 +18,12 @@ function AllPosts(props) {
     const posts = props.posts || [];
     return(
         <View style={styles.container}>
+            <Text style={styles.header}>My Posts</Text>
             <FlatList 
                 keyExtractor={(post) => post.id.toString()}
                 data={posts.sort((a,b) => b.id-a.id)} 
                 renderItem={post => (
-                <Post id={post.id} post={post} style={styles.post}/>
+                <Post id={post.id} post={post} handleDelete={handleDelete} />
             )} style={styles.allPosts} />
         </View>
     );
@@ -30,12 +35,18 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-    loadPosts: (userId)=>dispatch(fetchPostsFromDb(userId))
+    loadPosts: (userId) => dispatch(fetchPostsFromDb(userId)),
+    removePost: (postId) => dispatch(deletePost(postId))
 })
 
 export default connect(mapState, mapDispatch)(AllPosts)
 
 const styles = StyleSheet.create({
+    header:{
+        fontSize: 24,
+        marginTop: 30,
+        marginBottom: '4%'
+    },
     container: {
         display:'flex',
         flex: 1,
@@ -43,10 +54,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '4%',
-    },
-    post: {
-        display: 'flex',
-        height: '90%',
-        width:'auto'
     }
 })
