@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Pressable, View, StyleSheet, Text, Modal, Button, Image} from 'react-native'
-import PostModal from './PostModal';
 
 export default function Post(props) {
     const [openModal, setOpenModal] = useState(false);
